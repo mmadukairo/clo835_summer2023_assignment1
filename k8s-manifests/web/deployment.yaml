@@ -1,26 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: web
+  labels:
+    app: web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: web
   template:
     metadata:
       labels:
-        app: mysql
+        app: web
     spec:
       containers:
-        - name: mysql
-          image: 149333603185.dkr.ecr.us-east-1.amazonaws.com/clo835-mysql:v1
-          ports:
-            - containerPort: 3306
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: rootpassword
-            - name: MYSQL_DATABASE
-              value: employees
-
-
+      - name: web-app
+        image: 149333603185.dkr.ecr.us-east-1.amazonaws.com/clo835-web:v1
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DBHOST
+          value: "mysql-service"
+        - name: DBPORT
+          value: "3306"
+        - name: DBUSER
+          value: "root"
+        - name: DBPWD
+          value: "password"
+        - name: DBNAME
+          value: "employees"

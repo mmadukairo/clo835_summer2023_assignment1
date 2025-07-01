@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-pod
+spec:
+  containers:
+    - name: web-app
+      image: 149333603185.dkr.ecr.us-east-1.amazonaws.com/clo835-web:v1
+      ports:
+        - containerPort: 5000
+      env:
+        - name: DBHOST
+          value: "mysql-service"
+        - name: DBPORT
+          value: "3306"
+        - name: DBUSER
+          value: "root"
+        - name: DBPWD
+          value: "password"
+        - name: DBNAME
+          value: "employees"

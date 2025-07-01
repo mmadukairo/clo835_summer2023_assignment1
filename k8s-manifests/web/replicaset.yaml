@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web-app-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: employees
+  template:
+    metadata:
+      labels:
+        app: employees
+    spec:
+      containers:
+        - name: web-app
+          image: 149333603185.dkr.ecr.us-east-1.amazonaws.com/clo835-web:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DBHOST
+              value: "mysql-service"
+            - name: DBPORT
+              value: "3306"
+            - name: DBUSER
+              value: "root"
+            - name: DBPWD
+              value: "password"
+            - name: DBNAME
+              value: "employees"
